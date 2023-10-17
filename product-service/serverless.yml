@@ -3,7 +3,7 @@ frameworkVersion: "3"
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs14.x
   stage: dev
   region: eu-west-1
 
@@ -13,6 +13,12 @@ plugins:
 functions:
   getProductsList:
     handler: getProductsList.getProductsList
+    environment:
+      PRODUCTS_TABLE: "Products"
+      STOCKS_TABLE: "Stocks"
+    package:
+      include:
+        - node_modules/**
     events:
       - http:
           path: /product
@@ -20,9 +26,37 @@ functions:
           cors: true
   getProductsById:
     handler: getProductsById.getProductsById
+    environment:
+      PRODUCTS_TABLE: "Products"
+    package:
+      include:
+        - node_modules/**
     events:
       - http:
           path: /product/{productId}
           method: get
           cors: true
-#
+  getStocksList:
+    handler: getStocksList.getStocksList
+    environment:
+      STOCKS_TABLE: "Stocks"
+    package:
+      include:
+        - node_modules/**
+    events:
+      - http:
+          path: /stocks
+          method: get
+          cors: true
+   createProduct:  
+    handler: createProduct.createProduct
+    environment:
+      PRODUCTS_TABLE: "Products"
+    package:
+      include:
+        - node_modules/**
+    events:
+      - http:
+          path: /products
+          method: post 
+          cors: true
