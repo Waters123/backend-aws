@@ -48,7 +48,7 @@ functions:
           path: /stocks
           method: get
           cors: true
-   createProduct:  
+  createProduct:
     handler: createProduct.createProduct
     environment:
       PRODUCTS_TABLE: "Products"
@@ -57,6 +57,6 @@ functions:
         - node_modules/**
     events:
       - http:
-          path: /products
-          method: post 
+          path: /createproduct
+          method: post
           cors: true
