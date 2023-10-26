@@ -5,6 +5,10 @@ module.exports.importProductsFile = async (event, context) => {
     if (!event.queryStringParameters || !event.queryStringParameters.name) {
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify({ error: "Missing fileName parameter" }),
       };
     }
@@ -30,6 +34,7 @@ module.exports.importProductsFile = async (event, context) => {
   } catch (error) {
     return {
       statusCode: 500,
+
       body: JSON.stringify({ error: "Internal Server Error" }),
     };
   }
