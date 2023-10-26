@@ -11,7 +11,7 @@ module.exports.importProductsFile = async (event, context) => {
 
     const name = event.queryStringParameters.name;
     const s3Params = {
-      Bucket: "uploaddded",
+      Bucket: "aws-upload-buckett",
       Key: `uploaded/${name}`,
       Expires: 300,
       ContentType: "text/csv",
