@@ -14,9 +14,17 @@ provider:
             - s3:GetObject
             - s3:PutObject
             - s3:DeleteObject
+            - sqs:SendMessage
+            - sns:Publish
           Resource:
             - arn:aws:s3:::aws-upload-buckett
             - arn:aws:s3:::aws-upload-buckett/*
+            - Fn::GetAtt:
+                - CatalogItemsQueue
+                - Arn
+            - Fn::GetAtt:
+                - CreateProductTopic
+                - Arn
 
 functions:
   importProductsFile:
@@ -40,3 +48,33 @@ functions:
           rules:
             - prefix: uploaded
           existing: true
+
+  catalogBatchProcess:
+    handler: catalogBatchProcess.handler
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - CatalogItemsQueue
+              - Arn
+          batchSize: 5
+
+resources:
+  Resources:
+    CatalogItemsQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: catalogItemsQueue
+
+    CreateProductTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        DisplayName: "Create Product Topic"
+
+    CreateProductEmailSubscription:
+      Type: "AWS::SNS::Subscription"
+      Properties:
+        Protocol: "email"
+        TopicArn:
+          Ref: "CreateProductTopic"
+        Endpoint: "guga.bukhrashvili@gmail.com"

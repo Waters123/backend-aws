@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1480.0",
+    "chai": "^4.3.10",
     "csv-parser": "^3.0.0"
   },
   "devDependencies": {
