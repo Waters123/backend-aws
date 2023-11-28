@@ -1,0 +1,30 @@
+service: authorization-service
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: your-region
+
+functions:
+  basicAuthorizer:
+    handler: handler.basicAuthorizer
+    environment:
+      YOUR_GITHUB_ACCOUNT_LOGIN: ${env:YOUR_GITHUB_ACCOUNT_LOGIN}
+      TEST_PASSWORD: ${env:TEST_PASSWORD}
+    events:
+      - http:
+          path: /authorize
+          method: any
+
+  importAuthorizer:
+    handler: handler.basicAuthorizer
+    environment:
+      YOUR_GITHUB_ACCOUNT_LOGIN: ${env:YOUR_GITHUB_ACCOUNT_LOGIN}
+      TEST_PASSWORD: ${env:TEST_PASSWORD}
+    events:
+      - http:
+          path: /import
+          method: any

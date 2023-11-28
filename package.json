@@ -10,5 +10,10 @@
   "license": "ISC",
   "devDependencies": {
     "serverless-auto-swagger": "^2.12.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1475.0",
+    "csv-parser": "^3.0.0",
+    "sinon": "^17.0.1"
   }
 }
